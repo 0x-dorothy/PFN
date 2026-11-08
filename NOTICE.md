@@ -1,19 +1,5 @@
 # Происхождение кода и лицензия
 
-## Что это
-
-PFN (Private Finance Tracker) — **производный проект** (форк). В основе лежит
-открытый проект **Aurum**:
-
-> Required Notice: Copyright ZProger (https://github.com/ZProger)
->
-> Aurum — https://github.com/Zproger/Aurum
-> Лицензия: PolyForm Noncommercial License 1.0.0
-> https://polyformproject.org/licenses/noncommercial/1.0.0
-
-Полный текст лицензии — в файле [`LICENSE`](LICENSE). Он распространяется вместе
-с этой копией и не может быть удалён или изменён.
-
 ## Что разрешено лицензией
 
 PolyForm Noncommercial 1.0.0 разрешает читать код, запускать его, изменять и
