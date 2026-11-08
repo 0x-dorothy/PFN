@@ -175,7 +175,9 @@ try {
     } | ConvertTo-Json -Depth 5
 
     try {
-        $release = Invoke-RestMethod "$api/repos/$User/$Repo/releases" -Method Post -Headers $headers -Body $releaseBody -ContentType "application/json"
+        # PowerShell 5.1 кодирует строковое тело как ISO-8859-1, и кириллица в
+        # описании релиза даёт 400. Отправляем явный UTF-8.
+        $release = Invoke-RestMethod "$api/repos/$User/$Repo/releases" -Method Post -Headers $headers -Body ([System.Text.Encoding]::UTF8.GetBytes($releaseBody)) -ContentType "application/json"
         Write-Host "релиз $tag создан" -ForegroundColor Green
     }
     catch {
