@@ -247,7 +247,7 @@ def page_shell(title: str, description: str, body: str, pages, current: str) -> 
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--out", default="_site")
+    parser.add_argument("--out", default="build/site")
     args = parser.parse_args()
     out = Path(args.out)
     if not out.is_absolute():
