@@ -1,4 +1,4 @@
-﻿# Публикует проект на GitHub: создаёт репозиторий, заливает код, ставит описание
+# Публикует проект на GitHub: создаёт репозиторий, заливает код, ставит описание
 # и теги, создаёт релиз v<версия> и прикрепляет файлы из release/.
 #
 #   powershell -ExecutionPolicy Bypass -File tools\publish.ps1 -User <ник> -Repo PFN
@@ -124,7 +124,7 @@ try {
             has_issues  = $true
             has_wiki    = $false
         } | ConvertTo-Json
-        Invoke-RestMethod "$api/user/repos" -Method Post -Headers $headers -Body $body -ContentType "application/json" | Out-Null
+        Invoke-RestMethod "$api/user/repos" -Method Post -Headers $headers -Body ([System.Text.Encoding]::UTF8.GetBytes($body)) -ContentType "application/json" | Out-Null
         Write-Host "репозиторий создан" -ForegroundColor Green
     }
     else {

@@ -60,9 +60,12 @@ jobs:
       - name: Checksums
         shell: pwsh
         run: |
-          $files = Get-ChildItem . -File | Where-Object { $_.Name -like "PFN-*" } | Sort-Object Name
-          $files += Get-ChildItem release -File | Where-Object { $_.Name -like "PFN-*" } | Sort-Object Name
-          $files | ForEach-Object {
+          # @() обязателен: при одном файле конвейер возвращает FileInfo,
+          # а не массив, и += на нём падает (PowerShell 7).
+          $files = @(Get-ChildItem . -File | Where-Object { $_.Name -like "PFN-*" })
+          $files += @(Get-ChildItem release -File -ErrorAction SilentlyContinue | Where-Object { $_.Name -like "PFN-*" })
+          if ($files.Count -eq 0) { throw "ни одного артефакта для контрольных сумм" }
+          $files | Sort-Object Name | ForEach-Object {
             "{0}  {1}" -f (Get-FileHash $_.FullName -Algorithm SHA256).Hash.ToLower(), $_.Name
           } | Set-Content SHA256SUMS.txt -Encoding ascii
 
