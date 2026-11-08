@@ -62,6 +62,7 @@ EXCLUDED = [
     "asyncpg",
     "pytest",
     "numpy",
+    "PIL",
     "tkinter",
     "unittest",
     "pydoc_data",

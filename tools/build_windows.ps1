@@ -22,20 +22,24 @@ try {
     $version = (Select-String -Path "backend\app\core\config.py" -Pattern 'APP_VERSION = "([^"]+)"').Matches[0].Groups[1].Value
     Write-Host "PFN $version" -ForegroundColor Cyan
 
-    # PyInstaller требует нормальный CPython; если у указанного интерпретатора
-    # его нет, берём переносимый из build\pytool.
-    $py = $Python
-    & $py -c "import PyInstaller, fastapi" *> $null
-    if ($LASTEXITCODE -ne 0) {
-        $portable = "build\pytool\extracted\tools\python.exe"
-        if (Test-Path $portable) {
-            Write-Host "использую переносимый Python: $portable" -ForegroundColor Yellow
-            $py = (Resolve-Path $portable).Path
-        }
-        else {
-            throw "Нет PyInstaller и fastapi в '$Python'. Установите: pip install -r backend\requirements.txt pyinstaller"
-        }
+    # PyInstaller требует нормальный CPython. Сначала пробуем переносимый из
+    # build\pytool — он чистый (без лишних пакетов) и даёт воспроизводимый
+    # размер сборки; иначе — указанный $Python.
+    $portable = "build\pytool\extracted\tools\python.exe"
+    $py = $null
+    if (Test-Path $portable) {
+        $candidate = (Resolve-Path $portable).Path
+        & $candidate -c "import PyInstaller, fastapi" *> $null
+        if ($LASTEXITCODE -eq 0) { $py = $candidate }
     }
+    if (-not $py) {
+        & $Python -c "import PyInstaller, fastapi" *> $null
+        if ($LASTEXITCODE -eq 0) { $py = $Python }
+    }
+    if (-not $py) {
+        throw "Нет PyInstaller и fastapi. Установите: pip install -r backend\requirements.txt pyinstaller"
+    }
+    Write-Host "сборка через: $py" -ForegroundColor DarkGray
 
     Write-Host "1/5 Интерфейс..." -ForegroundColor Cyan
     Push-Location frontend

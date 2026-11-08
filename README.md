@@ -10,6 +10,8 @@
 - светлая, тёмная и системная тема + шесть акцентных цветов;
 - русский и английский интерфейс.
 
+**Сайт:** https://0x-dorothy.github.io/PFN/ · **Скачать:** [Releases](https://github.com/0x-dorothy/PFN/releases)
+
 ![Дашборд PFN — тёмная тема](docs/screenshot-dashboard.png)
 
 > Проект — форк [Aurum](https://github.com/Zproger/Aurum) (© ZProger, PolyForm
@@ -187,8 +189,8 @@ cd backend && pytest     # требует Postgres (см. tests/README.md)
 
 - **Вкладка «Криптовалюта»** без `PFN_COINGECKO_API_KEY` показывает ошибку —
   остальное приложение работает полностью офлайн.
-- **Тесты бэкенда** пока поднимают Postgres (наследие upstream); ручной прогон
-  на SQLite описан в `docs/Анализ-и-план.md`.
+- **Тесты бэкенда** идут на SQLite (как и рабочая сборка): 142 теста,
+  эфемерная база в памяти на каждый тест.
 - **macOS-сборка не проверялась**: `.app`/`.dmg` собираются только на Mac.
   Windows-артефакт собран и проверен на этой машине.
 - **Android** пока не собран: нужен Android SDK, см. `docs/Анализ-и-план.md` §11.2.

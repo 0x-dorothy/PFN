@@ -26,7 +26,9 @@ APP_VERSION = "1.2.0"
 cd frontend && npx tsc -b && npx vitest run     # типы и 56 юнит-тестов
 ```
 
-⚠️ Бэкенд-тесты (`pytest`) пока требуют Postgres и в релизную проверку не входят.
+```bash
+cd backend && python -m pytest -q      # 142 теста на SQLite, ~35 секунд
+```
 
 ## 3. Сборка
 

@@ -18,10 +18,11 @@ since coingecko_id is deliberately not unique).
 from datetime import date as date_
 from datetime import datetime
 
-from sqlalchemy import Boolean, Date, DateTime, Enum, ForeignKey, Numeric, String, Text
+from sqlalchemy import Boolean, Date, Enum, ForeignKey, Numeric, String, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base import Base
+from app.models.mixins import UTCDateTime
 from app.models.asset import Asset
 from app.models.enums import CryptoTransactionType
 from app.models.mixins import TimestampMixin
@@ -142,4 +143,4 @@ class CryptoSyncState(Base):
     __tablename__ = "crypto_sync_state"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    last_synced_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    last_synced_at: Mapped[datetime | None] = mapped_column(UTCDateTime, nullable=True)
