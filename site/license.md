@@ -40,4 +40,4 @@ PolyForm Noncommercial 1.0.0 разрешает читать код, запус�
 
 ## Полный текст
 
-Файл [`LICENSE`](https://github.com/USER/PFN/blob/main/LICENSE) в репозитории.
+Файл [`LICENSE`](https://github.com/0x-dorothy/PFN/blob/main/LICENSE) в репозитории.

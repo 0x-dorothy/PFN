@@ -5,7 +5,7 @@
 ## Windows
 
 1. Скачайте `PFN-1.2.0-Setup.exe` со страницы
-   [Releases](https://github.com/USER/PFN/releases).
+   [Releases](https://github.com/0x-dorothy/PFN/releases).
 2. Двойной клик → «Далее» → «Установить».
 3. Запустите **PFN** из меню «Пуск» или с рабочего стола.
 
