@@ -1,0 +1,7 @@
+# This tells GitBook which folder holds the space's content when it is connected
+# to this repository via Git Sync (Space settings → Git Sync → GitHub).
+root: ./site/
+
+structure:
+  readme: README.md
+  summary: SUMMARY.md

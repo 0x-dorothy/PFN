@@ -1,0 +1,56 @@
+# Environment — everything named .env* is ignored except the checked-in template.
+.env
+.env.*
+!.env.example
+
+# Local data: the SQLite database and its WAL sidecars. This is the user's
+# financial history — it must never be committed.
+data/
+*.db
+*.db-wal
+*.db-shm
+*.sqlite3
+pfn-backup-*.json
+*.sql
+*.dump
+
+# TLS/SSH keys, in case a reverse-proxy cert ends up dropped in the repo dir.
+*.pem
+*.key
+*.crt
+id_rsa
+id_ed25519
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+
+# Build products
+build/
+dist/
+release/
+assets/icon.icns
+
+# Node / frontend
+node_modules/
+frontend/dist/
+.vite/
+
+# Editors / OS / local tooling
+.DS_Store
+.idea/
+.vscode/
+
+# Development scaffolding, not part of the deliverable:
+#   upstream/ — read-only copy of the project this fork is based on
+#   probe/    — throwaway scripts used while porting to SQLite
+upstream/
+probe/
+*.zip
+
+# GitHub token, if published via tools/publish.ps1
+.gh-token

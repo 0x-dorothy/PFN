@@ -1,0 +1,3 @@
+# Optional: only needed when PFN_DB_BACKEND=postgres.
+# The default build uses SQLite and needs none of this.
+asyncpg==0.32.0

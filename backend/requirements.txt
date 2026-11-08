@@ -1,0 +1,11 @@
+# Runtime dependencies for the local (SQLite) build.
+# Postgres is optional: see requirements-postgres.txt for the driver.
+fastapi==0.146.0
+uvicorn[standard]==0.54.0
+sqlalchemy[asyncio]==2.1.5
+aiosqlite==0.21.0
+alembic==1.20.0
+pydantic==2.14.1
+pydantic-settings==2.16.0
+python-dotenv==1.2.4
+httpx==0.28.1

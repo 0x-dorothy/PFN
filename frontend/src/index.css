@@ -1,0 +1,167 @@
+@import "tailwindcss";
+
+/*
+ * Semantic tokens, light values first. Dark values are re-declared for both
+ * the OS-level `prefers-color-scheme` and the manual `[data-theme]` toggle
+ * (Settings → Theme, see lib/theme.ts), per the dataviz skill's reference
+ * palette (references/palette.md).
+ */
+:root {
+  color-scheme: light;
+  --surface-0: #f9f9f7; /* page plane */
+  --surface-1: #fcfcfb; /* card surface */
+  --surface-2: #f2f1ed; /* hover/active wash */
+  --text-primary: #0b0b0b;
+  --text-secondary: #52514e;
+  --text-muted: #898781;
+  --border: rgba(11, 11, 11, 0.1);
+  --gridline: #e1e0d9;
+
+  --success: #006300;
+  --danger: #c1302a;
+
+  --series-1: #2a78d6; /* blue */
+  --series-2: #eb6834; /* orange */
+  --series-3: #1baf7a; /* aqua */
+  --series-4: #eda100; /* yellow */
+  --series-5: #e87ba4; /* magenta */
+  --series-6: #008300; /* green */
+  --series-7: #4a3aa7; /* violet */
+  --series-8: #e34948; /* red */
+  --series-other: #898781;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --surface-0: #0d0d0d;
+    --surface-1: #1a1a19;
+    --surface-2: #232322;
+    --text-primary: #ffffff;
+    --text-secondary: #c3c2b7;
+    --text-muted: #898781;
+    --border: rgba(255, 255, 255, 0.1);
+    --gridline: #2c2c2a;
+
+    --success: #0ca30c;
+    --danger: #e66767;
+
+    --series-1: #3987e5;
+    --series-2: #d95926;
+    --series-3: #199e70;
+    --series-4: #c98500;
+    --series-5: #d55181;
+    --series-6: #008300;
+    --series-7: #9085e9;
+    --series-8: #e66767;
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --surface-0: #0d0d0d;
+  --surface-1: #1a1a19;
+  --surface-2: #232322;
+  --text-primary: #ffffff;
+  --text-secondary: #c3c2b7;
+  --text-muted: #898781;
+  --border: rgba(255, 255, 255, 0.1);
+  --gridline: #2c2c2a;
+
+  --success: #0ca30c;
+  --danger: #e66767;
+
+  --series-1: #3987e5;
+  --series-2: #d95926;
+  --series-3: #199e70;
+  --series-4: #c98500;
+  --series-5: #d55181;
+  --series-6: #008300;
+  --series-7: #9085e9;
+  --series-8: #e66767;
+}
+
+/*
+ * Accent colour. One hue, six presets (Настройки → Оформление), applied as
+ * data-accent on <html> next to data-theme. Every interactive surface reads
+ * these five tokens and nothing else, so adding a preset means adding one
+ * line below. The chart palette (--series-*) deliberately stays out of this:
+ * those eight colours are validated for colour-blind safety and must not
+ * shift when the user picks a different accent.
+ *
+ * --accent          fill behind white text (buttons, active pills)
+ * --accent-hover    the same fill, pressed/hovered
+ * --accent-soft     tinted wash (active nav item, selected chip)
+ * --accent-fg       accent as text/icon on a dark surface
+ * --accent-contrast text colour on top of --accent
+ */
+:root {
+  --accent: #2a72cc;
+  --accent-hover: color-mix(in oklab, var(--accent) 88%, #000);
+  --accent-soft: color-mix(in oklab, var(--accent) 12%, transparent);
+  --accent-fg: var(--accent);
+  --accent-contrast: #ffffff;
+}
+
+:root[data-accent="violet"] { --accent: #6c4bd1; }
+:root[data-accent="green"] { --accent: #17794a; }
+:root[data-accent="amber"] { --accent: #a8620a; }
+:root[data-accent="rose"] { --accent: #c02c6b; }
+:root[data-accent="graphite"] { --accent: #3f3f46; }
+
+/* On a dark surface the same hue needs a lighter text variant and a stronger
+ * wash; the fill itself stays put so white-on-accent keeps its contrast. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --accent-hover: color-mix(in oklab, var(--accent) 82%, #fff);
+    --accent-soft: color-mix(in oklab, var(--accent) 24%, transparent);
+    --accent-fg: color-mix(in oklab, var(--accent) 62%, #fff);
+  }
+}
+
+:root[data-theme="dark"] {
+  --accent-hover: color-mix(in oklab, var(--accent) 82%, #fff);
+  --accent-soft: color-mix(in oklab, var(--accent) 24%, transparent);
+  --accent-fg: color-mix(in oklab, var(--accent) 62%, #fff);
+}
+
+@theme {
+  --color-surface-0: var(--surface-0);
+  --color-surface-1: var(--surface-1);
+  --color-surface-2: var(--surface-2);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-border: var(--border);
+  --color-gridline: var(--gridline);
+  --color-success: var(--success);
+  --color-danger: var(--danger);
+
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-fg: var(--accent-fg);
+  --color-accent-contrast: var(--accent-contrast);
+
+  --color-series-1: var(--series-1);
+  --color-series-2: var(--series-2);
+  --color-series-3: var(--series-3);
+  --color-series-4: var(--series-4);
+  --color-series-5: var(--series-5);
+  --color-series-6: var(--series-6);
+  --color-series-7: var(--series-7);
+  --color-series-8: var(--series-8);
+  --color-series-other: var(--series-other);
+
+  --font-sans: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+body {
+  background-color: var(--surface-0);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+}
+
+* {
+  border-color: var(--color-border);
+}

@@ -1,0 +1,26 @@
+# Нормализация переносов строк при коммите.
+* text=auto eol=lf
+
+# .bat — в кодировке cp866 (кириллица в консоли Windows). Git не должен ни
+# менять переносы, ни пытаться показывать diff: иначе файл сломается.
+*.bat -text
+*.cmd -text
+
+# PowerShell 5.1 читает .ps1 без BOM как ANSI, поэтому здесь CRLF и BOM.
+*.ps1 text eol=crlf
+
+# Shell-скрипты должны остаться с LF, иначе они не запустятся на macOS/Linux.
+*.sh text eol=lf
+*.command text eol=lf
+
+# Бинарные файлы.
+*.ico binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.woff binary
+*.woff2 binary
+*.exe binary
+*.zip binary
+*.dmg binary
