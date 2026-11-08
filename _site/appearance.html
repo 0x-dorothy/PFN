@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Оформление — PFN</title>
+<meta name="description" content="Оформление Тема Три режима: светлая, тёмная и системная — последняя следует за настройкой ОС и переключается на лету, без перезагрузки. Тему можно менять и в са">
+<meta name="theme-color" content="#0d0d0d">
+<meta property="og:title" content="Оформление — PFN">
+<meta property="og:description" content="Оформление Тема Три режима: светлая, тёмная и системная — последняя следует за настройкой ОС и переключается на лету, без перезагрузки. Тему можно менять и в са">
+<meta property="og:image" content="assets/og.png">
+<meta property="og:type" content="website">
+<link rel="icon" href="assets/icon.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+  <aside class="side">
+    <a class="brand" href="index.html"><img src="assets/icon.png" alt=""><b>PFN</b></a>
+    <nav><a href="README.html">PFN</a><a href="install.html">Установка</a><a href="features.html">Возможности</a><a href="appearance.html" class="active">Оформление</a><a href="data.html">Данные и бэкап</a><a href="faq.html">Вопросы и ответы</a><a href="license.html">Лицензия и происхождение</a></nav>
+    <a class="cta" href="https://github.com/0x-dorothy/PFN/releases">Скачать для Windows</a>
+    <p class="meta">Private Finance Tracker<br>v1.2.0</p>
+  </aside>
+  <main>
+    <div class="menu-toggle"><button data-menu aria-label="Меню">☰</button> PFN</div>
+    <article>
+<h1>Оформление</h1>
+<p><img alt="Настройки: язык, тема и акцент" src="assets/settings.png" /></p>
+<h2>Тема</h2>
+<p>Три режима: <strong>светлая</strong>, <strong>тёмная</strong> и <strong>системная</strong> — последняя следует за
+настройкой ОС и переключается на лету, без перезагрузки.</p>
+<p>Тему можно менять и в самой системе: приложение подхватит изменение, если
+выбран системный режим.</p>
+<h2>Акцентный цвет</h2>
+<p>Шесть пресетов: синий, фиолетовый, зелёный, янтарный, розовый, графит.
+Акцент меняет кнопки, активный пункт меню, переключатели, фокус полей и ссылки.</p>
+<div class="hint hint-info">
+<p>Палитра графиков при этом не меняется. Эти восемь цветов подобраны под
+цветовую слепоту, и «перекрасить» их вместе с кнопками значило бы сделать
+отчёты нечитаемыми.</p>
+</div>
+<h2>Язык</h2>
+<p>Русский и английский, переключатель — там же, в настройках. Выбор запоминается
+в браузере и применяется до первой отрисовки: вспышки «не той» темы или языка
+при запуске нет.</p>
+<h2>Где это хранится</h2>
+<p>Тема, акцент и язык — локальные настройки интерфейса, они живут в браузере
+приложения. Валюта — серверная настройка: от неё зависит, в чём создаются новые
+счёта и активы.</p>
+    </article>
+  </main>
+</div>
+<script>
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('[data-menu]');
+  const side = document.querySelector('.side');
+  if (btn) { side.classList.toggle('open'); }
+  else if (!e.target.closest('.side')) { side.classList.remove('open'); }
+});
+</script>
+</body>
+</html>

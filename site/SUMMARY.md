@@ -1,6 +1,6 @@
 # Summary
 
-* [PFN](README.md)
+* [Главная](README.md)
 * [Установка](install.md)
 * [Возможности](features.md)
 * [Оформление](appearance.md)
