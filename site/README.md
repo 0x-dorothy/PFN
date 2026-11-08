@@ -11,7 +11,7 @@ description: Локальный трекер личных финансов. Од
 работает на вашем компьютере. Данные лежат в одном файле и никуда не
 отправляются.
 
-[Скачать для Windows](https://github.com/Zproger/Aurum/releases) · [Исходный код](https://github.com/Zproger/Aurum) · [Как установить](install.md)
+[Скачать для Windows](https://github.com/0x-dorothy/PFN/releases) · [Исходный код](https://github.com/0x-dorothy/PFN) · [Как установить](install.md)
 
 ## Что это даёт
 
