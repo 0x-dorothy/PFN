@@ -1,0 +1,21 @@
+{
+  "name": "pfn-finance",
+  "version": "0.1.0",
+  "private": true,
+  "description": "PFN для Obsidian: финансы в markdown-заметках vault",
+  "type": "module",
+  "scripts": {
+    "dev": "node esbuild.config.mjs",
+    "build": "tsc --noEmit && node esbuild.config.mjs production",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "builtin-modules": "^4.0.0",
+    "esbuild": "^0.25.0",
+    "obsidian": "^1.7.2",
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
+  }
+}

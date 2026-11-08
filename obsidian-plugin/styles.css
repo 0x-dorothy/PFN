@@ -1,0 +1,196 @@
+/* Оформление повторяет настольный PFN: те же радиусы, тонкие границы и
+   акцент. Цвета берутся из переменных темы Obsidian, чтобы плагин не спорил
+   с оформлением vault — в тёмной теме он выглядит как тёмное приложение. */
+
+.pfn {
+  padding: 4px 2px 24px;
+}
+
+.pfn-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.pfn-header h2 {
+  margin: 0;
+  font-size: 1.35em;
+  letter-spacing: -0.01em;
+}
+
+.pfn-icon-button {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  border: 1px solid var(--background-modifier-border);
+  background: var(--background-secondary);
+  color: var(--text-normal);
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.pfn-icon-button:hover {
+  background: var(--background-modifier-hover);
+}
+
+.pfn-link {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: var(--text-accent);
+  cursor: pointer;
+  font-size: 0.85em;
+  padding: 4px 6px;
+}
+
+.pfn-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.pfn-cards-sm .pfn-card-value {
+  font-size: 1.15em;
+}
+
+.pfn-card {
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 12px;
+  background: var(--background-secondary);
+  padding: 14px 16px;
+}
+
+.pfn-card-label {
+  font-size: 0.68em;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.pfn-card-value {
+  font-size: 1.45em;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.pfn-positive {
+  color: var(--color-green);
+}
+
+.pfn-negative {
+  color: var(--color-red);
+}
+
+.pfn-section {
+  margin-bottom: 26px;
+}
+
+.pfn-section h3 {
+  font-size: 0.72em;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0 0 12px;
+  font-weight: 600;
+}
+
+.pfn-bar-row {
+  margin-bottom: 10px;
+}
+
+.pfn-bar-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 0.9em;
+  margin-bottom: 5px;
+}
+
+.pfn-bar-value {
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.pfn-bar-track {
+  height: 7px;
+  border-radius: 999px;
+  background: var(--background-modifier-border);
+  overflow: hidden;
+}
+
+.pfn-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--interactive-accent);
+}
+
+.pfn-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.pfn-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.pfn-row:last-child {
+  border-bottom: none;
+}
+
+.pfn-row-main {
+  min-width: 0;
+  flex: 1;
+}
+
+.pfn-row-title {
+  font-size: 0.95em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pfn-row-sub {
+  font-size: 0.78em;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.pfn-row-amount {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.pfn-empty {
+  color: var(--text-muted);
+  font-size: 0.9em;
+}
+
+.pfn-button {
+  border: none;
+  border-radius: 10px;
+  background: var(--interactive-accent);
+  color: var(--text-on-accent);
+  padding: 9px 16px;
+  font-size: 0.9em;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.pfn-button:hover {
+  background: var(--interactive-accent-hover);
+}
+
+/* Модалка */
+
+.pfn-modal-body .setting-item {
+  border-top: none;
+}
