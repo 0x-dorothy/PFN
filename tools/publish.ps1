@@ -34,7 +34,7 @@ try {
     $tag = "v$version"
     Write-Host "PFN $version -> github.com/$User/$Repo" -ForegroundColor Cyan
 
-    # --- 1. ссылки в текстах -----------------------------------------------
+    # --- 1. ссылки в текстах ------------------------------------------------
     # В документации стоят заглушки USER/PFN, чтобы сайт и README не врали о
     # адресе репозитория. Меняем их на настоящие до коммита.
     $files = @("README.md", "NOTICE.md", "CHANGELOG.md") +
@@ -58,23 +58,48 @@ try {
         if (Test-Path $candidate) { $git = $candidate } else { throw "git не найден" }
     }
 
-    if (-not (Test-Path ".git")) {
-        & $git init -b main | Out-Null
+    # PowerShell 5.1 превращает любой вывод нативной программы в stderr в
+    # завершающую ошибку при ErrorActionPreference=Stop, а git пишет туда
+    # прогресс и предупреждения. Поэтому git вызывается с ослабленным режимом,
+    # а результат проверяется по коду возврата.
+    function Invoke-Git {
+        param([string[]]$GitArgs)
+        $previous = $ErrorActionPreference
+        $ErrorActionPreference = "Continue"
+        try {
+            $out = & $git @GitArgs 2>&1
+            $code = $LASTEXITCODE
+        }
+        finally { $ErrorActionPreference = $previous }
+        [pscustomobject]@{ Code = $code; Output = @($out) }
     }
-    & $git -c user.name=$User -c user.email="$User@users.noreply.github.com" add -A
-    $staged = (& $git diff --cached --name-only | Measure-Object).Count
-    if ($staged -eq 0) {
+
+    function Show-Output($result) {
+        foreach ($line in $result.Output) { Write-Host "  $line" -ForegroundColor DarkGray }
+    }
+
+    if (-not (Test-Path ".git")) {
+        $r = Invoke-Git @("init", "-b", "main")
+        if ($r.Code -ne 0) { Show-Output $r; throw "git init: код $($r.Code)" }
+    }
+
+    $ident = @("-c", "user.name=$User", "-c", "user.email=$User@users.noreply.github.com")
+    Invoke-Git (@("add", "-A") + @()) | Out-Null
+
+    $status = Invoke-Git @("status", "--porcelain")
+    if ($status.Output.Count -eq 0) {
         Write-Host "изменений нет, коммит не нужен" -ForegroundColor DarkGray
     }
     else {
         if (-not $CommitMessage) { $CommitMessage = "PFN $version" }
-        & $git -c user.name=$User -c user.email="$User@users.noreply.github.com" commit -m $CommitMessage | Out-Null
-        Write-Host "закоммичено файлов: $staged" -ForegroundColor DarkGray
+        $r = Invoke-Git ($ident + @("commit", "-m", $CommitMessage))
+        if ($r.Code -ne 0) { Show-Output $r; throw "git commit: код $($r.Code)" }
+        Write-Host ("закоммичено: " + ($status.Output.Count) + " изменённых файлов") -ForegroundColor DarkGray
     }
 
     if ($DryRun) {
         Write-Host "DryRun: git готов, отправка пропущена" -ForegroundColor Yellow
-        & $git log --oneline -1
+        Show-Output (Invoke-Git @("log", "--oneline", "-3"))
         return
     }
 
@@ -112,18 +137,22 @@ try {
     } | ConvertTo-Json
     try {
         Invoke-RestMethod "$api/repos/$User/$Repo/topics" -Method Put -Headers $headers -Body $topics -ContentType "application/json" | Out-Null
+        Write-Host "topics выставлены" -ForegroundColor DarkGray
     }
     catch { Write-Warning "не удалось выставить topics: $($_.Exception.Message)" }
 
     # --- 4. push ------------------------------------------------------------
     $remote = "https://x-access-token:$Token@github.com/$User/$Repo.git"
-    & $git remote remove origin 2>$null
-    & $git remote add origin $remote
-    & $git push -u origin main
-    if ($LASTEXITCODE -ne 0) { throw "git push завершился с кодом $LASTEXITCODE" }
+    $remotes = (Invoke-Git @("remote")).Output
+    if ($remotes -contains "origin") { Invoke-Git @("remote", "remove", "origin") | Out-Null }
+    Invoke-Git @("remote", "add", "origin", $remote) | Out-Null
+
+    $r = Invoke-Git @("push", "-u", "origin", "main")
+    Show-Output $r
+    if ($r.Code -ne 0) { throw "git push завершился с кодом $($r.Code)" }
 
     # Токен не должен остаться в конфиге репозитория.
-    & $git remote set-url origin "https://github.com/$User/$Repo.git"
+    Invoke-Git @("remote", "set-url", "origin", "https://github.com/$User/$Repo.git") | Out-Null
 
     # --- 5. релиз -----------------------------------------------------------
     $assets = @()
