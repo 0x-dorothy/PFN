@@ -154,12 +154,16 @@ document.addEventListener('click', (e) => {
 """
 
 
-def plain(text: str) -> str:
-    """Markdown → простой текст для <title> и описания."""
-    text = re.sub(r"!\[[^\]]*\]\([^)]*\)", "", text)
-    text = re.sub(r"\[([^\]]+)\]\([^)]*\)", r"\1", text)
-    text = re.sub(r"[*_`#>]", "", text)
-    return " ".join(text.split())
+def summarise(body_html: str, limit: int = 160) -> str:
+    """Первые N символов текста страницы — для <meta name="description">.
+
+    Считается по готовому HTML, а не по markdown: в исходнике остаются
+    служебные пометки (`{% hint %}`), которым в описании делать нечего.
+    """
+    text = re.sub(r"<[^>]+>", " ", body_html)
+    text = html.unescape(text)
+    text = " ".join(text.split())
+    return text[:limit]
 
 
 def convert(md_text: str) -> str:
@@ -271,7 +275,7 @@ def main() -> None:
         title = f"{label} — {APP_NAME}" if filename != "README.md" else f"{APP_NAME} — {APP_TAGLINE}"
         target = "index.html" if filename == "README.md" else filename.replace(".md", ".html")
         (out / target).write_text(
-            page_shell(title, description or plain(text)[:160], body, pages, filename),
+            page_shell(title, description or summarise(body), body, pages, filename),
             encoding="utf-8",
         )
         print(f"  {target}")
