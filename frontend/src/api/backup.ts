@@ -19,7 +19,7 @@ export async function exportBackup(): Promise<void> {
 
   const link = document.createElement("a");
   link.href = url;
-  link.download = `aurum-backup-${date}.json`;
+  link.download = `pfn-backup-${date}.json`;
   document.body.appendChild(link);
   link.click();
   link.remove();
