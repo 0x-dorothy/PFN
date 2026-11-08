@@ -183,8 +183,4 @@ cd backend && pytest     # требует Postgres (см. tests/README.md)
 
 ## Лицензия
 
-PolyForm Noncommercial License 1.0.0 — см. [LICENSE](LICENSE). Код можно
-читать, запускать, изменять и распространять для личных и учебных целей;
-продавать и строить на нём коммерческий продукт — нельзя.
-
-Происхождение и список изменений: [NOTICE.md](NOTICE.md).
+PolyForm Noncommercial License 1.0.0
