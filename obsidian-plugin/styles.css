@@ -10,7 +10,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 18px;
+  margin-bottom: 14px;
 }
 
 .pfn-header h2 {
@@ -43,6 +43,50 @@
   cursor: pointer;
   font-size: 0.85em;
   padding: 4px 6px;
+}
+
+/* Вкладки */
+
+.pfn-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding-bottom: 10px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.pfn-tab {
+  background: none;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 11px;
+  font-size: 0.9em;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.pfn-tab:hover {
+  background: var(--background-modifier-hover);
+  color: var(--text-normal);
+}
+
+.pfn-tab.is-active {
+  background: var(--background-secondary);
+  color: var(--text-normal);
+  font-weight: 600;
+}
+
+.pfn-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.pfn-section-head h3 {
+  margin: 0;
 }
 
 .pfn-cards {
@@ -89,17 +133,21 @@
   margin-bottom: 26px;
 }
 
-.pfn-section h3 {
+.pfn-section h3,
+.pfn-section-head h3 {
   font-size: 0.72em;
   letter-spacing: 0.07em;
   text-transform: uppercase;
   color: var(--text-muted);
-  margin: 0 0 12px;
   font-weight: 600;
 }
 
+.pfn-section h3 {
+  margin: 0 0 12px;
+}
+
 .pfn-bar-row {
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .pfn-bar-head {
@@ -128,6 +176,10 @@
   background: var(--interactive-accent);
 }
 
+.pfn-bar-over {
+  background: var(--color-red);
+}
+
 .pfn-list {
   list-style: none;
   padding: 0;
@@ -144,6 +196,18 @@
 
 .pfn-row:last-child {
   border-bottom: none;
+}
+
+.pfn-row-clickable {
+  cursor: pointer;
+  border-radius: 8px;
+  padding-left: 8px;
+  padding-right: 8px;
+  margin: 0 -8px;
+}
+
+.pfn-row-clickable:hover {
+  background: var(--background-modifier-hover);
 }
 
 .pfn-row-main {
@@ -174,6 +238,14 @@
   font-size: 0.9em;
 }
 
+.pfn-goal {
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 12px;
+  background: var(--background-secondary);
+  padding: 12px 14px;
+  margin-bottom: 10px;
+}
+
 .pfn-button {
   border: none;
   border-radius: 10px;
@@ -189,8 +261,20 @@
   background: var(--interactive-accent-hover);
 }
 
-/* Модалка */
+.pfn-button-sm {
+  padding: 5px 11px;
+  font-size: 0.82em;
+  border-radius: 8px;
+}
 
-.pfn-modal-body .setting-item {
-  border-top: none;
+.pfn-button-danger {
+  background: var(--color-red);
+  color: #ffffff;
+}
+
+.pfn-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 18px;
 }

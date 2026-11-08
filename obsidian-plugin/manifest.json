@@ -1,7 +1,7 @@
 {
   "id": "pfn-finance",
   "name": "PFN — Finance",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "minAppVersion": "1.5.0",
   "description": "Личные финансы внутри vault: счета, транзакции, бюджеты, цели и капитал. Данные — markdown, совместимы с Dataview.",
   "author": "0x-dorothy",

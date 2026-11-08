@@ -1,16 +1,18 @@
 import { Notice, Plugin, WorkspaceLeaf } from "obsidian";
 
-import { DEFAULT_SETTINGS, type Settings } from "./model/types";
+import { DEFAULT_SETTINGS, type Settings, type Transaction } from "./model/types";
 import { Ledger } from "./store/ledger";
-import { AddTransactionModal } from "./ui/AddTransactionModal";
 import { DashboardView, VIEW_TYPE_PFN } from "./ui/DashboardView";
 import { PfnSettingTab } from "./ui/SettingsTab";
+import { TransactionModal, localMonth } from "./ui/TransactionModal";
 
 export default class PfnPlugin extends Plugin {
   settings: Settings = DEFAULT_SETTINGS;
   ledger!: Ledger;
-  /** Месяц, который показывает дашборд: YYYY-MM. */
-  activeMonth = new Date().toISOString().slice(0, 7);
+  /** Месяц, который показывают обзор и операции: YYYY-MM. */
+  activeMonth = localMonth();
+  /** Активная вкладка — запоминается между открытиями панели. */
+  activeTab: "overview" | "transactions" | "budgets" | "goals" | "assets" = "overview";
 
   private refreshTimer: number | null = null;
 
@@ -31,8 +33,14 @@ export default class PfnPlugin extends Plugin {
 
     this.addCommand({
       id: "add-transaction",
-      name: "Добавить транзакцию",
-      callback: () => void this.openAddTransaction(),
+      name: "Добавить операцию",
+      callback: () => void this.openTransaction(),
+    });
+
+    this.addCommand({
+      id: "open-accounts",
+      name: "Открыть счета",
+      callback: () => void this.openNote("accounts.md"),
     });
 
     this.addSettingTab(new PfnSettingTab(this.app, this));
@@ -58,18 +66,18 @@ export default class PfnPlugin extends Plugin {
     await this.saveData(this.settings);
     this.ledger = new Ledger(this.app, this.settings);
     await this.ledger.ensureStructure();
-    await this.refreshViews();
+    await this.refresh();
   }
 
   private scheduleRefresh(): void {
     if (this.refreshTimer !== null) window.clearTimeout(this.refreshTimer);
     this.refreshTimer = window.setTimeout(() => {
       this.refreshTimer = null;
-      void this.refreshViews();
+      void this.refresh();
     }, 300);
   }
 
-  private async refreshViews(): Promise<void> {
+  async refresh(): Promise<void> {
     for (const leaf of this.app.workspace.getLeavesOfType(VIEW_TYPE_PFN)) {
       const view = leaf.view;
       if (view instanceof DashboardView) await view.refresh();
@@ -91,12 +99,38 @@ export default class PfnPlugin extends Plugin {
     await this.app.workspace.revealLeaf(leaf);
   }
 
-  async openAddTransaction(): Promise<void> {
-    const snapshot = await this.ledger.load();
-    if (snapshot.accounts.length === 0) {
-      new Notice("PFN: сначала создайте счёт в Finance/accounts.md");
+  /** Открыть заметку с данными (счета, категории, бюджеты…) в редакторе. */
+  async openNote(file: string): Promise<void> {
+    const path = `${this.settings.folder.replace(/\/$/, "")}/${file}`;
+    const entry = this.app.vault.getAbstractFileByPath(path);
+    if (!entry) {
+      new Notice(`PFN: заметка ${file} не найдена`);
       return;
     }
-    new AddTransactionModal(this.app, this, snapshot).open();
+    // Открываем в текущей вкладке — так пользователь сразу видит структуру.
+    await this.app.workspace.getLeaf(false).openFile(entry as never);
+  }
+
+  async openTransaction(existing?: Transaction): Promise<void> {
+    const snapshot = await this.ledger.load();
+    if (snapshot.accounts.length === 0) {
+      new Notice("PFN: сначала создайте счёт в accounts.md");
+      return;
+    }
+    new TransactionModal(this.app, this, snapshot, existing).open();
+  }
+
+  /**
+   * Правка операции, у которой мог смениться месяц: старую запись надо убрать
+   * из прежнего файла, иначе она останется и там, и там.
+   */
+  async updateTransaction(previous: Transaction, next: Transaction): Promise<void> {
+    const sameMonth = previous.date.slice(0, 7) === next.date.slice(0, 7);
+    if (sameMonth) {
+      await this.ledger.updateTransaction(next);
+      return;
+    }
+    await this.ledger.deleteTransaction(previous);
+    await this.ledger.addTransaction(next);
   }
 }
