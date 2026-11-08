@@ -25,6 +25,20 @@ git ls-files | wc -l        # ≈ 300
 
 ## 2. Как выложить
 
+### Вариант 0 — одной командой (публикует всё сам)
+
+```powershell
+powershell -ExecutionPolicy Bypass -File tools\publish.ps1 -User <ник> -Repo PFN
+```
+
+Скрипт создаёт репозиторий, заливает код, ставит описание и topics, создаёт
+релиз `v<версия>` и прикрепляет к нему `Setup.exe`, ZIP и `SHA256SUMS.txt`.
+Токен берёт из `.gh-token` или переменной `GH_TOKEN` (права: `repo` + `workflow`).
+
+Проверить без отправки: добавьте `-DryRun`.
+
+### Вариант 1 — git вручную
+
 ### Вариант А — git (если он установлен)
 
 ```bash

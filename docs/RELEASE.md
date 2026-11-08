@@ -63,8 +63,14 @@ powershell -ExecutionPolicy Bypass -File tools\build_windows.ps1
 
 ## 5. Публикация
 
-Репозиторий ещё не инициализирован (в этом окружении нет `git`). Как только он
-будет на GitHub:
+Репозиторий уже опубликован. Повторная публикация и обновление релиза — одной
+командой (см. [PUBLISH.md](PUBLISH.md)):
+
+```powershell
+powershell -ExecutionPolicy Bypass -File tools\publish.ps1 -User <ник> -Repo PFN
+```
+
+Отдельно, если нужно выпустить новую версию вручную:
 
 ```bash
 git tag v1.2.0
