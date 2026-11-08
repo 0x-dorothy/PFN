@@ -1,12 +1,8 @@
 # История изменений
 
-Формат — [Keep a Changelog](https://keepachangelog.com/ru/1.1.0/),
-версионирование — [SemVer](https://semver.org/lang/ru/).
-
 ## [1.2.0] — 2026-11-08
 
-Первый публичный релиз форка **PFN (Private Finance Tracker)**, основанного на
-Aurum 1.1.8 (© ZProger, PolyForm Noncommercial 1.0.0).
+Первый публичный релиз PFN (Private Finance Tracker) на Github.
 
 ### Добавлено
 
