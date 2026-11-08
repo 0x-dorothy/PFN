@@ -54,3 +54,6 @@ probe/
 
 # GitHub token, if published via tools/publish.ps1
 .gh-token
+
+# Static site build output
+_site/
